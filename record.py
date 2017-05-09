@@ -9,20 +9,33 @@ DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 PHOTO_PATH = os.path.join(DIR_PATH, 'photos')
 
 
-def get_current_photo_location():
+def current():
     current = datetime.datetime.time(datetime.datetime.now())
-    file_name = str(current.hour) + '_' + str(current.minute) + '.jpg'
+    return current
+
+
+def get_current_photo_location():
+    now = current()
+    file_name = str(now.hour) + '_' + str(now.minute) + '.jpg'
     file_path = os.path.join(PHOTO_PATH, file_name)
     return file_path
 
 
-def main(sys_argv):
+def capture_photo():
     cam = cv2.VideoCapture(0)
     time.sleep(1)
     ret_val, img = cam.read()
     photo_location = get_current_photo_location()
     print(photo_location)
     cv2.imwrite(photo_location, img)
+
+
+def main(sys_argv):
+    while True:
+        now = current()
+        if now.minute % 5 == 0:
+            capture_photo()
+        time.sleep(60)
 
 
 if __name__ == '__main__':
