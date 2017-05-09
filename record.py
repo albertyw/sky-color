@@ -24,5 +24,6 @@ def main(sys_argv):
     print(photo_location)
     cv2.imwrite(photo_location, img)
 
+
 if __name__ == '__main__':
     main(sys.argv)
